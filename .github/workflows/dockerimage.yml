@@ -7,35 +7,21 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag go-example:$(date +%s)
 
   release:
-
+    needs: build
     runs-on: ubuntu-latest
-
     steps:
     - name: Docker Publish
-      uses: manusa/actions-publish-docker@v1.0.1
+      uses: zenato/docker-action@v1.0.0
       with:
-    # Name of the Docker image
-        name: go-example
-    # Tag for the Docker image
-      #  tag: # optional
-    # Script body to compute tag name for the Docker image, has context as the main function argument
-      # tag script: # optional
-    # Username for Docker registry
         username: ${{ secrets.dockerhubID }}
-    # Password for Docker registry
         password: ${{ secrets.dockerhubPASSWORD }}
-        # Registry URL
-    #registry: # optional
-    # Don't skip pull requests
-    #include pull requests: # optional
+        repository: docker.io
+        tag: kofe54/go-example
