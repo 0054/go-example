@@ -8,3 +8,6 @@ run:
 
 stop: 
 	docker stop go-example || true
+
+deploy:
+	oc apply -f manifest/openshift.yaml

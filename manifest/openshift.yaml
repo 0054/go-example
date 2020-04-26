@@ -16,9 +16,23 @@ spec:
     spec:
       containers:
         - name: go-example
-          image: kofe54/go-example:latest
+          image: kofe54/go-example:2020-04-26
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+
 ---
 apiVersion: v1
 kind: Service
