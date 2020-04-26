@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - uses: actions/checkout@v2
         name: Check out code
 
@@ -19,7 +23,7 @@ jobs:
           username: ${{ secrets.dockerhubID }}
           password: ${{ secrets.dockerhubPASSWORD }}
           repository: ${{ secrets.dockerhubID }}/go-example
-          tags: v${{ github.sha }}
+          tags: ${{ steps.date.outputs.date }}
     # - uses: actions/checkout@v2
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag go-example:$(date +%s)
