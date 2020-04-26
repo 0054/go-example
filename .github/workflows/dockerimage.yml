@@ -10,12 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.dockerhubID }}
-        password: ${{ secrets.dockerhubPASSWORD }}
-        repository: ${{ secrets.dockerhubID }}/go-example
-        tags: go-example:$(date +%s)
+      - uses: docker/build-push-action@v1
+        name: Build & push Docker image
+        with:
+          username: ${{ secrets.dockerhubID }}
+          password: ${{ secrets.dockerhubPASSWORD }}
+          repository: ${{ secrets.dockerhubID }}/go-example
+          tags: go-example:$(date +%s)
     # - uses: actions/checkout@v2
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag go-example:$(date +%s)
