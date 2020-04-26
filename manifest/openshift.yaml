@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-example
+  namespace: test4
+spec:
+  selector:
+    matchLabels:
+      app: go-example
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: go-example
+    spec:
+      containers:
+        - name: go-example
+          image: kofe54/go-example:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-example-service
+  namespace: test4
+spec:
+  selector:
+    app: go-example
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: go-example-route
+  namespace: test4
+spec:
+  path: /
+  to:
+    kind: Service
+    name: go-example-service
+  port:
+    targetPort: 8080
+

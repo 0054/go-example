@@ -10,18 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag go-example:$(date +%s)
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Docker Publish
-      uses: zenato/docker-action@v1.0.0
+    uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.dockerhubID }}
         password: ${{ secrets.dockerhubPASSWORD }}
-        repository: docker.io
-        tag: kofe54/go-example
+        repository: ${{ secrets.dockerhubID }}/go-example
+        tags: go-example:$(date +%s)
+    # - uses: actions/checkout@v2
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag go-example:$(date +%s)
+
