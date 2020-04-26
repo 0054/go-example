@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.dockerhubID }}
           password: ${{ secrets.dockerhubPASSWORD }}
           repository: ${{ secrets.dockerhubID }}/go-example
-          tags: $(date +%s)
+          #tags: latest
     # - uses: actions/checkout@v2
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag go-example:$(date +%s)
